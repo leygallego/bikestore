@@ -1,46 +1,35 @@
 import './App.css';
+import { useState } from 'react';
 // import { render } from "react-dom";
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from "react-router-dom";
+
 import Home from './pages/Home';
-import Bikes from './pages/Bikes';
-import Categorias from './pages/Categorias';
-import NotFound from './pages/NotFound'
-import Navbar from './components/Navbar';
-import Category from './pages/Category';
+import Login from './components/Login';
+import firebaseApp from './credenciales';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
+const auth = getAuth(firebaseApp)
 
 function App() {
-  return (
-    <BrowserRouter>
-      <Navbar />
-    <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/marcas" element={<Bikes />} />
-    <Route path="/categorias" element={<Categorias />} />
-    <Route path="/categorias/:id" element={<Category />} />
-    <Route path="*" element={<NotFound />} />
 
+  const [usuarioGlobal, setUsuarioGlobal ] = useState(null);
+  onAuthStateChanged(auth, (usuarioFirebase)=>{
+    if (usuarioFirebase) {
+    setUsuarioGlobal(usuarioFirebase)
+  } else {
+    setUsuarioGlobal(null)
+  }
 
+} )
 
-
-    </Routes>
-
-     {/* <Routes>
-      <Route path="/" element={<Home />}>
-        <Route index element={<Home />} />
-        <Route path="home" element={<Home />}>
-           <Route path=":teamId" element={<Team />} />
-          <Route path="new" element={<NewTeamForm />} />
-          <Route index element={<LeagueStandings />} /> 
-        </Route>
-      </Route>
-    </Routes>  */}
-  </BrowserRouter>
+  return <>
+      {
+       usuarioGlobal ? <Home /> : <Login /> 
+      }
   
-  )
+  </>
+
+  
+  
 }
 
 export default App;

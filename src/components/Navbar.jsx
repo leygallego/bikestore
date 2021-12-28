@@ -23,13 +23,13 @@ function Navbar() {
                 {clicked ? <FontAwesomeIcon icon={faTimes}/> : <FontAwesomeIcon icon={faBars}/>}
                 </div>
             <ul className={clicked ? "menu-list" : "menu-list close"}>
-                <li>
+                <li className="nav-linked" onClick={handleClick}>
                     <NavLink className={({isActive}) => (isActive ? "active" : "noActive")} to='/'>Home</NavLink>
                 </li>
-                <li>
+                <li className="nav-linked" onClick={handleClick}>
                     <NavLink className={({isActive}) => (isActive ? "active" : "noActive")} to='/marcas'>Motos</NavLink>
                 </li>
-                <li>
+                <li className="nav-linked" onClick={handleClick}>
                     <NavLink className={({isActive}) => (isActive ? "active" : "noActive")} to='/categorias'>Categorías</NavLink>
                 </li>
             </ul>
